@@ -59,22 +59,20 @@
 </div>
 
 <script type="text/javascript">
-
 $(document).ready(function(){
-
     var count = 0;
     var time = 31;
     var isSelected = false;
-
+    
     var listOfQuestions = {
-        question:["One?", "Seven", "Twelve?"],
-        answer:[1, 7, 12],
-        firstChoice:[1, 7, 12],
-        secondChoice:[2, 6, 10],
-        thirdChoice:[3, 5, 11],
-        fourthChoice:[4, 8, 9]
+        question:[1, 7, 12, 16],
+        answer:[1, 7, 12, 16],
+        firstChoice:[1, 7, 12, 16],
+        secondChoice:[2, 6, 14, 14],
+        thirdChoice:[3, 5, 11, 13],
+        fourthChoice:[4, 8, 9, 15]
     };
-
+    
     function showHolders() {
         $("#question-holder").show();
         $("#choiceOne-holder").show();
@@ -82,7 +80,6 @@ $(document).ready(function(){
         $("#choiceThree-holder").show();
         $("#choiceFour-holder").show();
     }
-
     function hideHolders() {
         $("#question-holder").hide();
         $("#choiceOne-holder").hide();
@@ -90,10 +87,8 @@ $(document).ready(function(){
         $("#choiceThree-holder").hide();
         $("#choiceFour-holder").hide();
     }
-
     function displayQuestion () {
-
-        showHolders();
+    //    showHolders();
     //    stopWatch();
     //    $("#result-holder").hide();
     //    startTime();
@@ -103,38 +98,32 @@ $(document).ready(function(){
         $("#choiceTwo-holder").html(listOfQuestions.secondChoice[count]);
         $("#choiceThree-holder").html(listOfQuestions.thirdChoice[count]);
         $("#choiceFour-holder").html(listOfQuestions.fourthChoice[count]);
-
         $("#choiceOne-holder").hover(function() {
             $(this).css("background-color", "gray");
         }, 
         function(){
             $(this).css("background-color", "white");
         });
-
         $("#choiceTwo-holder").hover(function() {
             $(this).css("background-color", "gray");
         },
         function(){
             $(this).css("background-color", "white");
         });
-
         $("#choiceThree-holder").hover(function() {
             $(this).css("background-color", "gray");
         },
         function(){
             $(this).css("background-color", "white");
         });
-
         $("#choiceFour-holder").hover(function() {
             $(this).css("background-color", "gray");
         },
         function(){
             $(this).css("background-color", "white");
         });
-
         checkAnswer();
     }
-
     function checkAnswer(){
         $("#choiceOne-holder").on("click", function(){
             if(listOfQuestions.firstChoice[count] === listOfQuestions.answer[count]) {
@@ -142,6 +131,7 @@ $(document).ready(function(){
             //    stopQuestion();
                 isSelected = true;
                 console.log("Right! The answer was " + listOfQuestions.answer[count]);
+                count++;
             //    startQuestion();
             }
             else {
@@ -152,7 +142,6 @@ $(document).ready(function(){
             //    startQuestion();
             }
         });
-
         $("#choiceTwo-holder").on("click", function(){
             if(listOfQuestions.secondChoice[count] === listOfQuestions.answer[count]) {
             //    stopTime();
@@ -169,7 +158,6 @@ $(document).ready(function(){
             //    startQuestion();
             }
         });
-
         $("#choiceThree-holder").on("click", function(){
             if(listOfQuestions.thirdChoice[count] === listOfQuestions.answer[count]) {
             //    stopTime();
@@ -186,7 +174,6 @@ $(document).ready(function(){
             //    startQuestion();
             }
         });
-
          $("#choiceFour-holder").on("click", function(){
             if(listOfQuestions.fourthChoice[count] === listOfQuestions.answer[count]) {
             //    stopTime();
@@ -203,7 +190,6 @@ $(document).ready(function(){
             //    startQuestion();
             }
         });
-
         /*
         if(time <= 0) {
             console.log("Time is up!");
@@ -213,6 +199,7 @@ $(document).ready(function(){
         */
     }
 
+    /*
     function nextQuestion() {
         hideHolders();
         console.log(count);
@@ -221,41 +208,39 @@ $(document).ready(function(){
         setTimeout(displayQuestion, 1000);
         displayQuestion();
     }
-
     function startQuestion() {
         showQuestion = setInterval(nextQuestion, 30000);
     }
-
     function stopQuestion() {
         clearInterval(showQuestion);
     } 
-
+    */
     function resetTime() {
-        time = 30;
+        time = 31;
     }
     
     function displayTime() {
         time--;
         $("#time-holder").html(time);
-
         if(time <= 0) {
             resetTime();
         }
     }
-
     function startTime() {
         ticker = setInterval(displayTime, 1000);
     }
-
     function stopTime() {
         clearInterval(ticker);
+        resetTime();
+        setTimeout(startTime, 2000);
+        setTimeout(displayQuestion, 3000);    
     }
        
     $(".start").on("click", function() {
         $(".start").hide();
         startTime();
         displayQuestion();
-        startQuestion();
+    //    startQuestion();
     });
 });
     
