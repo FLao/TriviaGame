@@ -1,0 +1,14 @@
+h1, .start, button {
+	text-align: center;
+}
+
+#time-holder,
+#question-holder, 
+#answer-holder, 
+#choiceOne-holder, 
+#choiceTwo-holder, 
+#choiceThree-holder, 
+#choiceFour-holder,
+#result-holder {
+	text-align: center;
+}

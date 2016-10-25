@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Trivia Game</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+<script src="https://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>The Trivia Game!</h1>  
+    </div>
+        <row>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-default start">Start</button>
+            </div>
+        </row>
+        <row>
+            <div class="col-md-12">
+                <h2><div id="time-holder"></div></h2>
+            </div>
+        </row>
+         <row>
+            <div class="col-md-12">
+                <h2><div id="question-holder"></div></h2>
+            </div>
+        </row>
+        <row>
+            <div class="col-md-12">
+                <h2><div id="answer-holder"></div></h2>
+            </div>
+        </row>
+        <row>
+            <div class="col-md-12">
+                <h2><div id="choiceOne-holder"></div></h2>
+            </div>
+        <row>
+            <div class="col-md-12">
+                <h2><div id="choiceTwo-holder"></div></h2>
+            </div>
+        </row>
+        <row>
+            <div class="col-md-12">
+                <h2><div id="choiceThree-holder"></div></h2>
+            </div>
+        </row>
+        <row>
+            <div class="col-md-12">
+                <h2><div id="choiceFour-holder"></div></h2>
+            </div>
+        </row>
+        <row>
+            <div class="col-md-12">
+                <h2><div id="result-holder"></div></h2>
+            </div>
+        </row>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+    var count = 0;
+    var time = 31;
+    var isSelected = false;
+
+    var listOfQuestions = {
+        question:["One?", "Seven", "Twelve?"],
+        answer:[1, 7, 12],
+        firstChoice:[1, 7, 12],
+        secondChoice:[2, 6, 10],
+        thirdChoice:[3, 5, 11],
+        fourthChoice:[4, 8, 9]
+    };
+
+    function showHolders() {
+        $("#question-holder").show();
+        $("#choiceOne-holder").show();
+        $("#choiceTwo-holder").show();
+        $("#choiceThree-holder").show();
+        $("#choiceFour-holder").show();
+    }
+
+    function hideHolders() {
+        $("#question-holder").hide();
+        $("#choiceOne-holder").hide();
+        $("#choiceTwo-holder").hide();
+        $("#choiceThree-holder").hide();
+        $("#choiceFour-holder").hide();
+    }
+
+    function displayQuestion () {
+
+        showHolders();
+    //    stopWatch();
+    //    $("#result-holder").hide();
+    //    startTime();
+        $("#question-holder").html(listOfQuestions.question[count]);
+    //   $("#answer-holder").html(listOfQuestions.answer[count]);
+        $("#choiceOne-holder").html(listOfQuestions.firstChoice[count]);
+        $("#choiceTwo-holder").html(listOfQuestions.secondChoice[count]);
+        $("#choiceThree-holder").html(listOfQuestions.thirdChoice[count]);
+        $("#choiceFour-holder").html(listOfQuestions.fourthChoice[count]);
+
+        $("#choiceOne-holder").hover(function() {
+            $(this).css("background-color", "gray");
+        }, 
+        function(){
+            $(this).css("background-color", "white");
+        });
+
+        $("#choiceTwo-holder").hover(function() {
+            $(this).css("background-color", "gray");
+        },
+        function(){
+            $(this).css("background-color", "white");
+        });
+
+        $("#choiceThree-holder").hover(function() {
+            $(this).css("background-color", "gray");
+        },
+        function(){
+            $(this).css("background-color", "white");
+        });
+
+        $("#choiceFour-holder").hover(function() {
+            $(this).css("background-color", "gray");
+        },
+        function(){
+            $(this).css("background-color", "white");
+        });
+
+        checkAnswer();
+    }
+
+    function checkAnswer(){
+        $("#choiceOne-holder").on("click", function(){
+            if(listOfQuestions.firstChoice[count] === listOfQuestions.answer[count]) {
+                stopTime();
+            //    stopQuestion();
+                isSelected = true;
+                console.log("Right! The answer was " + listOfQuestions.answer[count]);
+            //    startQuestion();
+            }
+            else {
+            //    stopTime();
+                stopQuestion();
+                isSelected = true;
+                console.log("Wrong! Your answer was " + listOfQuestions.firstChoice[count]);
+            //    startQuestion();
+            }
+        });
+
+        $("#choiceTwo-holder").on("click", function(){
+            if(listOfQuestions.secondChoice[count] === listOfQuestions.answer[count]) {
+            //    stopTime();
+            //    stopQuestion();
+                isSelected = true;
+                console.log("Right! The answer was " + listOfQuestions.answer[count]);
+            //    startQuestion();
+            }
+            else {
+            //    stopTime();
+            //    stopQuestion();
+                isSelected = true;
+                console.log("Wrong! Your answer was " + listOfQuestions.secondChoice[count]);
+            //    startQuestion();
+            }
+        });
+
+        $("#choiceThree-holder").on("click", function(){
+            if(listOfQuestions.thirdChoice[count] === listOfQuestions.answer[count]) {
+            //    stopTime();
+                stopQuestion();
+                isSelected = true;
+                console.log("Right! The answer was " + listOfQuestions.answer[count]);
+            //    startQuestion();
+            }
+            else {
+                //stopTime();
+                stopQuestion();
+                isSelected = true;
+                console.log("Wrong! Your answer was " + listOfQuestions.thirdChoice[count]);
+            //    startQuestion();
+            }
+        });
+
+         $("#choiceFour-holder").on("click", function(){
+            if(listOfQuestions.fourthChoice[count] === listOfQuestions.answer[count]) {
+            //    stopTime();
+                stopQuestion();
+                isSelected = true;
+                console.log("Right! The answer was " + listOfQuestions.answer[count]);
+            //    startQuestion();
+            }
+            else {
+            //    stopTime();
+                stopQuestion();
+                isSelected = true;
+                console.log("Wrong! Your answer was " + listOfQuestions.fourthChoice[count]);
+            //    startQuestion();
+            }
+        });
+
+        /*
+        if(time <= 0) {
+            console.log("Time is up!");
+            nextQuestion();
+            resetTime();
+        }
+        */
+    }
+
+    function nextQuestion() {
+        hideHolders();
+        console.log(count);
+        count++;
+        console.log("Next question!");    
+        setTimeout(displayQuestion, 1000);
+        displayQuestion();
+    }
+
+    function startQuestion() {
+        showQuestion = setInterval(nextQuestion, 30000);
+    }
+
+    function stopQuestion() {
+        clearInterval(showQuestion);
+    } 
+
+    function resetTime() {
+        time = 30;
+    }
+    
+    function displayTime() {
+        time--;
+        $("#time-holder").html(time);
+
+        if(time <= 0) {
+            resetTime();
+        }
+    }
+
+    function startTime() {
+        ticker = setInterval(displayTime, 1000);
+    }
+
+    function stopTime() {
+        clearInterval(ticker);
+    }
+       
+    $(".start").on("click", function() {
+        $(".start").hide();
+        startTime();
+        displayQuestion();
+        startQuestion();
+    });
+});
+    
+</script>
+</body>
+</html>
