@@ -1,17 +1,25 @@
 h1, .start, button, .jumbotron {
 	text-align: center;
-	color: blue;
 }
 
 #time-holder,
 #question-holder, 
-#answer-holder, 
-#choiceOne-holder, 
-#choiceTwo-holder, 
-#choiceThree-holder, 
-#choiceFour-holder,
-#result-holder {
+#answer-holder {
 	text-align: center;
 }
 
+#choice-holder-1, 
+#choice-holder-2, 
+#choice-holder-3, 
+#choice-holder-4,
+#result-holder {
+	text-align: center;
+	background-color: black;
+}
+
+
+.jumbotron {
+	background-image: url("../images/stars.gif");
+
+}
 

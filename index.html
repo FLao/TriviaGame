@@ -13,6 +13,7 @@
     <div class="jumbotron">
         <h1>90s Music Trivia Game</h1>
     </div>
+    <div id="stars">
         <row>
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary start">Start</button>
@@ -57,6 +58,7 @@
                 <h2><div id="result-holder"></div></h2>
             </div>
         </row>
+        </div>
 </div>
 
 <script type="text/javascript">
@@ -65,6 +67,9 @@ $(document).ready(function(){
     var time = 31;
     var isSelected = false;
     var ticker;
+    var correct = 0;
+    var incorrect = 0;
+    var unanswered = 0;
     /*
     var listOfQuestions = {
         question:[1, 7, 12, 16],
@@ -109,29 +114,30 @@ $(document).ready(function(){
         $("#choice-holder-2").html(secondChoice[count]);
         $("#choice-holder-3").html(thirdChoice[count]);
         $("#choice-holder-4").html(fourthChoice[count]);
+        
         $("#choice-holder-1").hover(function() {
             $(this).css("background-color", "gray");
         },
         function(){
-            $(this).css("background-color", "white");
+            $(this).css("background-color", "black");
         });
         $("#choice-holder-2").hover(function() {
             $(this).css("background-color", "gray");
         },
         function(){
-            $(this).css("background-color", "white");
+            $(this).css("background-color", "black");
         });
         $("#choice-holder-3").hover(function() {
             $(this).css("background-color", "gray");
         },
         function(){
-            $(this).css("background-color", "white");
+            $(this).css("background-color", "black");
         });
         $("#choice-holder-4").hover(function() {
             $(this).css("background-color", "gray");
         },
         function(){
-            $(this).css("background-color", "white");
+            $(this).css("background-color", "black");
         });
         // checkAnswer(); //DONT CALL CHECKANSWER HERE
     }
@@ -150,6 +156,7 @@ $(document).ready(function(){
             // set isSelected to false in desplay question then you can stop double intervals
             isSelected = true;
             console.log("Right! The answer was " + answer[count]);
+            correct++;
             count++;
         }
         else {
@@ -157,10 +164,27 @@ $(document).ready(function(){
             // stopQuestion();
             isSelected = true;
             console.log("Wrong! Your answer was " + $(this).text() );
+            incorrect++;
             count++;
         //    startQuestion();
-        }   
+        } 
+
+        checkGameEnd();  
     }
+
+    function checkGameEnd() {
+        if(count === 5) {
+            console.log("Game over!" + correct + incorrect + unanswered);
+            count = 0;
+            $(".start").show();
+            $(".start").on("click", function() {
+                $(".start").hide();
+                startTime();
+                displayQuestion();
+            });
+        }
+    }
+
 
     /*
     function nextQuestion() {
@@ -198,7 +222,9 @@ $(document).ready(function(){
             if(time <= 0) {
                 stopTime();
                 console.log("Time over! The answer was " + answer[count]);
+                unanswered++;
                 count++;
+                checkGameEnd();
             }
     }
 
