@@ -1,5 +1,6 @@
-h1, .start, button {
+h1, .start, button, .jumbotron {
 	text-align: center;
+	color: blue;
 }
 
 #time-holder,
@@ -12,3 +13,5 @@ h1, .start, button {
 #result-holder {
 	text-align: center;
 }
+
+

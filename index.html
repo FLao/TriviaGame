@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Trivia Game</title>
+<title>90s Music Trivia Game</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="http://code.divshot.com/geo-bootstrap/swatch/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 <script src="https://code.jquery.com/jquery.js"></script>
 </head>
@@ -10,11 +11,11 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h1>The Trivia Game!</h1>  
+        <h1>90s Music Trivia Game</h1>
     </div>
         <row>
             <div class="col-md-12">
-                <button type="button" class="btn btn-default start">Start</button>
+                <button type="button" class="btn btn-primary start">Start</button>
             </div>
         </row>
         <row>
@@ -34,21 +35,21 @@
         </row>
         <row>
             <div class="col-md-12">
-                <h2><div id="choiceOne-holder"></div></h2>
+                <h2><div id="choice-holder-1"></div></h2>
             </div>
         <row>
             <div class="col-md-12">
-                <h2><div id="choiceTwo-holder"></div></h2>
-            </div>
-        </row>
-        <row>
-            <div class="col-md-12">
-                <h2><div id="choiceThree-holder"></div></h2>
+                <h2><div id="choice-holder-2"></div></h2>
             </div>
         </row>
         <row>
             <div class="col-md-12">
-                <h2><div id="choiceFour-holder"></div></h2>
+                <h2><div id="choice-holder-3"></div></h2>
+            </div>
+        </row>
+        <row>
+            <div class="col-md-12">
+                <h2><div id="choice-holder-4"></div></h2>
             </div>
         </row>
         <row>
@@ -63,7 +64,8 @@ $(document).ready(function(){
     var count = 0;
     var time = 31;
     var isSelected = false;
-    
+    var ticker;
+    /*
     var listOfQuestions = {
         question:[1, 7, 12, 16],
         answer:[1, 7, 12, 16],
@@ -72,131 +74,92 @@ $(document).ready(function(){
         thirdChoice:[3, 5, 11, 13],
         fourthChoice:[4, 8, 9, 15]
     };
-    
+    */
+
+    var question = ["Who was the only female solo artist to have a #1 hit single wthout releasing an album?",
+    "What country does the group Ace of Base come from?", "The song On Bended Knee was by", "Which month is the name of a title for a Greenday track?", "This guest rapper appeared in Snoop Doggy Dogg's Gin and Juice"];
+    var answer = ["Lisa Loeb", "Sweden", "Boyz II Men", "September", "Dr. Dre"];
+    var firstChoice = ["Lisa Loeb", "Sweden", "Boyz II Men", "September", "Dr. Dre"];
+    var secondChoice = ["Mariah Carey", "United States", "Jodeci", "March", "NAS"];
+    var thirdChoice = ["Whitney Houston", "France", "Hootie and the Blowfish", "June", "Ice Cube"];
+    var fourthChoice = ["Madonna", "Germany", "Kris Kross", "December", "Tupac"];
+
     function showHolders() {
         $("#question-holder").show();
-        $("#choiceOne-holder").show();
-        $("#choiceTwo-holder").show();
-        $("#choiceThree-holder").show();
-        $("#choiceFour-holder").show();
+        $("#choice-holder-1").show();
+        $("#choice-holder-2").show();
+        $("#choice-holder-3").show();
+        $("#choice-holder-4").show();
     }
     function hideHolders() {
         $("#question-holder").hide();
-        $("#choiceOne-holder").hide();
-        $("#choiceTwo-holder").hide();
-        $("#choiceThree-holder").hide();
-        $("#choiceFour-holder").hide();
+        $("#choice-holder-1").hide();
+        $("#choice-holder-2").hide();
+        $("#choice-holder-3").hide();
+        $("#choice-holder-4").hide();
     }
     function displayQuestion () {
     //    showHolders();
     //    stopWatch();
     //    $("#result-holder").hide();
     //    startTime();
-        $("#question-holder").html(listOfQuestions.question[count]);
+        $("#question-holder").html(question[count]);
     //   $("#answer-holder").html(listOfQuestions.answer[count]);
-        $("#choiceOne-holder").html(listOfQuestions.firstChoice[count]);
-        $("#choiceTwo-holder").html(listOfQuestions.secondChoice[count]);
-        $("#choiceThree-holder").html(listOfQuestions.thirdChoice[count]);
-        $("#choiceFour-holder").html(listOfQuestions.fourthChoice[count]);
-        $("#choiceOne-holder").hover(function() {
-            $(this).css("background-color", "gray");
-        }, 
-        function(){
-            $(this).css("background-color", "white");
-        });
-        $("#choiceTwo-holder").hover(function() {
+        $("#choice-holder-1").html(firstChoice[count]);
+        $("#choice-holder-2").html(secondChoice[count]);
+        $("#choice-holder-3").html(thirdChoice[count]);
+        $("#choice-holder-4").html(fourthChoice[count]);
+        $("#choice-holder-1").hover(function() {
             $(this).css("background-color", "gray");
         },
         function(){
             $(this).css("background-color", "white");
         });
-        $("#choiceThree-holder").hover(function() {
+        $("#choice-holder-2").hover(function() {
             $(this).css("background-color", "gray");
         },
         function(){
             $(this).css("background-color", "white");
         });
-        $("#choiceFour-holder").hover(function() {
+        $("#choice-holder-3").hover(function() {
             $(this).css("background-color", "gray");
         },
         function(){
             $(this).css("background-color", "white");
         });
-        checkAnswer();
+        $("#choice-holder-4").hover(function() {
+            $(this).css("background-color", "gray");
+        },
+        function(){
+            $(this).css("background-color", "white");
+        });
+        // checkAnswer(); //DONT CALL CHECKANSWER HERE
     }
-    function checkAnswer(){
-        $("#choiceOne-holder").on("click", function(){
-            if(listOfQuestions.firstChoice[count] === listOfQuestions.answer[count]) {
-                stopTime();
-            //    stopQuestion();
-                isSelected = true;
-                console.log("Right! The answer was " + listOfQuestions.answer[count]);
-                count++;
-            //    startQuestion();
-            }
-            else {
-            //    stopTime();
-                stopQuestion();
-                isSelected = true;
-                console.log("Wrong! Your answer was " + listOfQuestions.firstChoice[count]);
-            //    startQuestion();
-            }
-        });
-        $("#choiceTwo-holder").on("click", function(){
-            if(listOfQuestions.secondChoice[count] === listOfQuestions.answer[count]) {
-            //    stopTime();
-            //    stopQuestion();
-                isSelected = true;
-                console.log("Right! The answer was " + listOfQuestions.answer[count]);
-            //    startQuestion();
-            }
-            else {
-            //    stopTime();
-            //    stopQuestion();
-                isSelected = true;
-                console.log("Wrong! Your answer was " + listOfQuestions.secondChoice[count]);
-            //    startQuestion();
-            }
-        });
-        $("#choiceThree-holder").on("click", function(){
-            if(listOfQuestions.thirdChoice[count] === listOfQuestions.answer[count]) {
-            //    stopTime();
-                stopQuestion();
-                isSelected = true;
-                console.log("Right! The answer was " + listOfQuestions.answer[count]);
-            //    startQuestion();
-            }
-            else {
-                //stopTime();
-                stopQuestion();
-                isSelected = true;
-                console.log("Wrong! Your answer was " + listOfQuestions.thirdChoice[count]);
-            //    startQuestion();
-            }
-        });
-         $("#choiceFour-holder").on("click", function(){
-            if(listOfQuestions.fourthChoice[count] === listOfQuestions.answer[count]) {
-            //    stopTime();
-                stopQuestion();
-                isSelected = true;
-                console.log("Right! The answer was " + listOfQuestions.answer[count]);
-            //    startQuestion();
-            }
-            else {
-            //    stopTime();
-                stopQuestion();
-                isSelected = true;
-                console.log("Wrong! Your answer was " + listOfQuestions.fourthChoice[count]);
-            //    startQuestion();
-            }
-        });
-        /*
-        if(time <= 0) {
-            console.log("Time is up!");
-            nextQuestion();
-            resetTime();
+    $("#choice-holder-1").on("click", checkAnswer) // CALL IT HERE
+    $("#choice-holder-2").on("click", checkAnswer)
+    $("#choice-holder-3").on("click", checkAnswer)
+    $("#choice-holder-4").on("click", checkAnswer)
+
+    // HAVE CHECKANSWER BE MORE GENERIC SO IT WORKS FOR EACH INSTANCE
+    function checkAnswer() {
+//      var whichChoice = count + 1;
+//      console.log('count',count);
+
+        if($(this).text() === answer[count]) {
+            stopTime();
+            // set isSelected to false in desplay question then you can stop double intervals
+            isSelected = true;
+            console.log("Right! The answer was " + answer[count]);
+            count++;
         }
-        */
+        else {
+           stopTime();
+            // stopQuestion();
+            isSelected = true;
+            console.log("Wrong! Your answer was " + $(this).text() );
+            count++;
+        //    startQuestion();
+        }   
     }
 
     /*
@@ -204,7 +167,7 @@ $(document).ready(function(){
         hideHolders();
         console.log(count);
         count++;
-        console.log("Next question!");    
+        console.log("Next question!");
         setTimeout(displayQuestion, 1000);
         displayQuestion();
     }
@@ -213,19 +176,32 @@ $(document).ready(function(){
     }
     function stopQuestion() {
         clearInterval(showQuestion);
-    } 
+    }
     */
     function resetTime() {
         time = 31;
     }
-    
+
     function displayTime() {
         time--;
-        $("#time-holder").html(time);
-        if(time <= 0) {
-            resetTime();
-        }
+        $("#time-holder").html("Time remaining: " + time);
+        // if(time <= 0) {
+        //   clearInterval(ticker)
+        //    alert('out of time')
+        //    stopTime();
+        //    console.log("Time expired!");
+        //    clearInterval(ticker);
+        //    resetTime();
+        //    setTimeout(startTime, 2000);
+        //    setTimeout(displayQuestion, 3000);
+        //}
+            if(time <= 0) {
+                stopTime();
+                console.log("Time over! The answer was " + answer[count]);
+                count++;
+            }
     }
+
     function startTime() {
         ticker = setInterval(displayTime, 1000);
     }
@@ -233,17 +209,20 @@ $(document).ready(function(){
         clearInterval(ticker);
         resetTime();
         setTimeout(startTime, 2000);
-        setTimeout(displayQuestion, 3000);    
+        setTimeout(displayQuestion, 3000);
     }
-       
-    $(".start").on("click", function() {
-        $(".start").hide();
-        startTime();
-        displayQuestion();
+
+    //    alert('out of time')
+    resetTime();
+
+  $(".start").on("click", function() {
+  $(".start").hide();
+    startTime();
+    displayQuestion();
     //    startQuestion();
-    });
+  });
 });
-    
+
 </script>
 </body>
 </html>
