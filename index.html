@@ -13,11 +13,12 @@
     <div class="jumbotron">
         <h1>90s Music Trivia Game</h1>
     </div>
-    <div id="stars">
         <row>
-            <div class="col-md-12">
+            <div class="col-md-5"></div>
+            <div class="col-md-2">
                 <button type="button" class="btn btn-primary start">Start</button>
             </div>
+            <div class="col-md-5"></div>
         </row>
         <row>
             <div class="col-md-12">
@@ -27,38 +28,55 @@
          <row>
             <div class="col-md-12">
                 <h2><div id="question-holder"></div></h2>
+                <h2><div id="answer-holder"></div></h2>
             </div>
         </row>
         <row>
-            <div class="col-md-12">
-                <h2><div id="answer-holder"></div></h2>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h2><div id="image-holder"></div></h2>
             </div>
+            <div class="col-md-4"></div>
         </row>
         <row>
             <div class="col-md-12">
                 <h2><div id="choice-holder-1"></div></h2>
             </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h2><div id="correct-holder"></div></h2>
+            </div>
+            <div class="col-md-4"></div>
         <row>
             <div class="col-md-12">
                 <h2><div id="choice-holder-2"></div></h2>
             </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h2><div id="incorrect-holder"></div></h2>
+            </div>
+            <div class="col-md-4"></div>
         </row>
         <row>
             <div class="col-md-12">
                 <h2><div id="choice-holder-3"></div></h2>
             </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h2><div id="unanswered-holder"></div></h2>
+            </div>
+            <div class="col-md-4"></div>
         </row>
         <row>
             <div class="col-md-12">
                 <h2><div id="choice-holder-4"></div></h2>
             </div>
-        </row>
-        <row>
-            <div class="col-md-12">
-                <h2><div id="result-holder"></div></h2>
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h2><div id="restart-holder"></div></h2>
             </div>
+            <div class="col-md-2"></div>
         </row>
-        </div>
 </div>
 
 <script type="text/javascript">
@@ -70,24 +88,14 @@ $(document).ready(function(){
     var correct = 0;
     var incorrect = 0;
     var unanswered = 0;
-    /*
-    var listOfQuestions = {
-        question:[1, 7, 12, 16],
-        answer:[1, 7, 12, 16],
-        firstChoice:[1, 7, 12, 16],
-        secondChoice:[2, 6, 14, 14],
-        thirdChoice:[3, 5, 11, 13],
-        fourthChoice:[4, 8, 9, 15]
-    };
-    */
 
-    var question = ["Who was the only female solo artist to have a #1 hit single wthout releasing an album?",
-    "What country does the group Ace of Base come from?", "The song On Bended Knee was by", "Which month is the name of a title for a Greenday track?", "This guest rapper appeared in Snoop Doggy Dogg's Gin and Juice"];
-    var answer = ["Lisa Loeb", "Sweden", "Boyz II Men", "September", "Dr. Dre"];
-    var firstChoice = ["Lisa Loeb", "Sweden", "Boyz II Men", "September", "Dr. Dre"];
-    var secondChoice = ["Mariah Carey", "United States", "Jodeci", "March", "NAS"];
-    var thirdChoice = ["Whitney Houston", "France", "Hootie and the Blowfish", "June", "Ice Cube"];
-    var fourthChoice = ["Madonna", "Germany", "Kris Kross", "December", "Tupac"];
+    var question = ["This female solo artist had a number one hit called Stay but never released an album:",
+    "The country that the group Ace of Base comes from:", "The song On Bended Knee was by: ", "The month that also is the name of a title for a Greenday track:", "This guest rapper rapped part of Snoop Doggy Dogg's Gin and Juice: ", "This former MTV's VJ now hosts on Sirius XM 90s on 9 station:", "In country music, this hit called How Do I Live belonged to: ", "Trance originated from this nation: "];
+    var answer = ["Lisa Loeb", "Sweden", "Boyz II Men", "September", "Dr. Dre", "Downtown Julie Brown", "LeAnn Rimes", "Germany"];
+    var firstChoice = ["Whitney Houston", "United States", "Boyz II Men", "March", "Tupac", "Pauly Shore", "Garth Brooks", "Germany"];
+    var secondChoice = ["Mariah Carey", "Sweden", "Jodeci", "September", "NAS", "Carmen Electra", "LeAnn Rimes", "Mexico"];
+    var thirdChoice = ["Lisa Loeb", "France", "Hootie and the Blowfish", "June", "Ice Cube", "Downtown Julie Brown", "Tanya Tucker", "Japan"];
+    var fourthChoice = ["Madonna", "Canada", "Kris Kross", "December", "Dr. Dre", "Daisy Fuentes", "Billy Ray Cyrus", "Brazil"];
 
     function showHolders() {
         $("#question-holder").show();
@@ -103,13 +111,19 @@ $(document).ready(function(){
         $("#choice-holder-3").hide();
         $("#choice-holder-4").hide();
     }
+    function hideResults() {
+        $("#correct-holder").hide();
+        $("#incorrect-holder").hide();
+        $("#unanswered-holder").hide();
+        $("#restart-holder").hide();
+    }
     function displayQuestion () {
-    //    showHolders();
-    //    stopWatch();
-    //    $("#result-holder").hide();
-    //    startTime();
+        hideResults();
+        $("#answer-holder").hide();
+        $("#image-holder").hide();
+        $("#time-holder").show();
+        showHolders();
         $("#question-holder").html(question[count]);
-    //   $("#answer-holder").html(listOfQuestions.answer[count]);
         $("#choice-holder-1").html(firstChoice[count]);
         $("#choice-holder-2").html(secondChoice[count]);
         $("#choice-holder-3").html(thirdChoice[count]);
@@ -139,69 +153,56 @@ $(document).ready(function(){
         function(){
             $(this).css("background-color", "black");
         });
-        // checkAnswer(); //DONT CALL CHECKANSWER HERE
     }
-    $("#choice-holder-1").on("click", checkAnswer) // CALL IT HERE
+    $("#choice-holder-1").on("click", checkAnswer) 
     $("#choice-holder-2").on("click", checkAnswer)
     $("#choice-holder-3").on("click", checkAnswer)
     $("#choice-holder-4").on("click", checkAnswer)
 
-    // HAVE CHECKANSWER BE MORE GENERIC SO IT WORKS FOR EACH INSTANCE
     function checkAnswer() {
-//      var whichChoice = count + 1;
-//      console.log('count',count);
+
+        hideHolders();
 
         if($(this).text() === answer[count]) {
             stopTime();
-            // set isSelected to false in desplay question then you can stop double intervals
             isSelected = true;
+            $("#answer-holder").show();
+            $("#answer-holder").html("Right! The answer was: " + answer[count]);
+            displayImage();
             console.log("Right! The answer was " + answer[count]);
             correct++;
             count++;
         }
         else {
-           stopTime();
-            // stopQuestion();
+            stopTime();
             isSelected = true;
-            console.log("Wrong! Your answer was " + $(this).text() );
+            $("#answer-holder").show();
+            $("#answer-holder").html("Wrong! The answer was: " + answer[count]);
+            displayImage();
+            console.log("Wrong! The answer was " + answer[count]);
             incorrect++;
             count++;
-        //    startQuestion();
         } 
 
         checkGameEnd();  
     }
 
     function checkGameEnd() {
-        if(count === 5) {
+        if(count === question.length) {
+            $("#time-holder").hide();
+            $("#answer-holder").hide();
+            $("#image-holder").hide();
+            showResults();
             console.log("Game over!" + correct + incorrect + unanswered);
             count = 0;
             $(".start").show();
             $(".start").on("click", function() {
-                $(".start").hide();
-                startTime();
-                displayQuestion();
+                resetResults();
+                startGame();
             });
         }
     }
 
-
-    /*
-    function nextQuestion() {
-        hideHolders();
-        console.log(count);
-        count++;
-        console.log("Next question!");
-        setTimeout(displayQuestion, 1000);
-        displayQuestion();
-    }
-    function startQuestion() {
-        showQuestion = setInterval(nextQuestion, 30000);
-    }
-    function stopQuestion() {
-        clearInterval(showQuestion);
-    }
-    */
     function resetTime() {
         time = 31;
     }
@@ -209,18 +210,13 @@ $(document).ready(function(){
     function displayTime() {
         time--;
         $("#time-holder").html("Time remaining: " + time);
-        // if(time <= 0) {
-        //   clearInterval(ticker)
-        //    alert('out of time')
-        //    stopTime();
-        //    console.log("Time expired!");
-        //    clearInterval(ticker);
-        //    resetTime();
-        //    setTimeout(startTime, 2000);
-        //    setTimeout(displayQuestion, 3000);
-        //}
+      
             if(time <= 0) {
+                hideHolders();
                 stopTime();
+                $("#answer-holder").show();
+                $("#answer-holder").html("Time is up! The answer was: " + answer[count]);
+                displayImage();
                 console.log("Time over! The answer was " + answer[count]);
                 unanswered++;
                 count++;
@@ -235,20 +231,77 @@ $(document).ready(function(){
     function stopTime() {
         clearInterval(ticker);
         resetTime();
-        if(count < 4) {
+        if(count < question.length - 1) {
             setTimeout(startTime, 2000);
             setTimeout(displayQuestion, 3000);
         }
     }
 
-    //    alert('out of time')
     resetTime();
 
+    function displayImage() {
+        if(count === 0) {
+            $("#image-holder").show();
+            $("#image-holder").html('<img src="assets/images/lisaloeb.jpg">');
+        }
+        else if(count === 1) {
+            $("#image-holder").show();
+            $("#image-holder").html('<img src="assets/images/aceofbase.jpg">');
+        }
+        else if(count === 2) {
+            $("#image-holder").show();
+            $("#image-holder").html('<img src="assets/images/boyziimen.jpg">');
+        }
+        else if(count === 3) {
+            $("#image-holder").show();
+            $("#image-holder").html('<img src="assets/images/greenday.jpg">');
+        }
+        else if(count === 4) {
+            $("#image-holder").show();
+            $("#image-holder").html('<img src="assets/images/snoop.jpg">');
+        }
+        else if(count === 5) {
+            $("#image-holder").show();
+            $("#image-holder").html('<img src="assets/images/downtownjuliebrown.jpg">');
+        }
+        else if(count === 6) {
+            $("#image-holder").show();
+            $("#image-holder").html('<img src="assets/images/leannrimes.jpg">');
+        }
+        else if(count === 7) {
+            $("#image-holder").show();
+            $("#image-holder").html('<img src="assets/images/trance.jpg">');
+        }
+    }
+
+    function showResults() {
+        $("#correct-holder").show();
+        $("#correct-holder").html("Correct: " + correct);
+        $("#incorrect-holder").show();
+        $("#incorrect-holder").html("Incorrect: " + incorrect);
+        $("#unanswered-holder").show();
+        $("#unanswered-holder").html("Unanswered: " + unanswered);
+        $("#restart-holder").show();
+        $("#restart-holder").html("Click Start above to play again!");
+    }
+
+    function resetResults() {
+        correct = 0;
+        incorrect = 0;
+        unanswered = 0;
+    }
+
+    function startGame() {
+        $(".start").hide();
+        startTime();
+        displayQuestion();
+    }
+
   $(".start").on("click", function() {
-  $(".start").hide();
-    startTime();
-    displayQuestion();
-    //    startQuestion();
+//  $(".start").hide();
+//    startTime();
+//    displayQuestion();
+    startGame();
   });
 });
 

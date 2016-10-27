@@ -1,5 +1,10 @@
-h1, .start, button, .jumbotron {
+h1, .jumbotron {
 	text-align: center;
+}
+
+.start {
+	text-align: center;
+	display: inline-block;
 }
 
 #time-holder,
@@ -20,6 +25,5 @@ h1, .start, button, .jumbotron {
 
 .jumbotron {
 	background-image: url("../images/stars.gif");
-
 }
 
