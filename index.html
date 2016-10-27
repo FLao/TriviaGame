@@ -229,13 +229,16 @@ $(document).ready(function(){
     }
 
     function startTime() {
+        clearInterval(ticker);
         ticker = setInterval(displayTime, 1000);
     }
     function stopTime() {
         clearInterval(ticker);
         resetTime();
-        setTimeout(startTime, 2000);
-        setTimeout(displayQuestion, 3000);
+        if(count < 4) {
+            setTimeout(startTime, 2000);
+            setTimeout(displayQuestion, 3000);
+        }
     }
 
     //    alert('out of time')
